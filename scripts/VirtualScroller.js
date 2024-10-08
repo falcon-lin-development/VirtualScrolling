@@ -5,7 +5,7 @@ class VirtualScroller {
         this.totalItems = totalItems;
         this.renderItem = renderItem;
 
-        this.visibleItems = Math.ceil(container.clientHeight / itemHeight) + 1;
+        this.visibleItems = Math.ceil(container.clientHeight / this.itemHeight ) + 1;
         this.startIndex = 0;
         this.endIndex = this.visibleItems;
 
@@ -21,7 +21,7 @@ class VirtualScroller {
     onScroll() {
         const scrollTop = this.container.scrollTop;
         this.startIndex = Math.floor(scrollTop / this.itemHeight);
-        this.endIndex = this.startIndex + this.visibleItems;
+        this.endIndex = Math.min(this.startIndex + this.visibleItems, this.totalItems);
         this.render();
     }
 
@@ -38,16 +38,13 @@ class VirtualScroller {
     }
 }
 
-// Usage
-const container = document.getElementById('list-container');
-const itemHeight = 50;
-const totalItems = 10000;
 
-const renderItem = (index) => {
-    const item = document.createElement('div');
-    item.className = 'list-item';
-    item.textContent = `Item ${index + 1}`;
-    return item;
-};
+// For CommonJS environments (Node.js)
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = VirtualScroller;
+}
 
-new VirtualScroller(container, itemHeight, totalItems, renderItem);
+// For browser environments
+if (typeof window !== 'undefined') {
+    window.VirtualScroller = VirtualScroller;
+}
