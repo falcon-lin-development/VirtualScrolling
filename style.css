@@ -1,0 +1,12 @@
+#list-container {
+    height: 400px;
+    width: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+}
+.list-item {
+    height: 50px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    box-sizing: border-box;
+}
